@@ -46,30 +46,34 @@ export class GeoScoringService {
 
     const overallScore = Math.round((weightedSum / MAX_RAW) * 100);
 
-    await prisma.geoScore.create({
-      data: {
-        analysisId,
-        overallScore,
-        industryBenchmark: result.industryBenchmark ?? null,
-        scrapeQuality: result.scrapeQuality ?? null,
-        extractabilityScore: attrs.extractability.score,
-        extractabilityNotes: formatNotes(attrs.extractability),
-        entityClarityScore: attrs.entityClarity.score,
-        entityClarityNotes: formatNotes(attrs.entityClarity),
-        specificityScore: attrs.specificity.score,
-        specificityNotes: formatNotes(attrs.specificity),
-        corroborationScore: attrs.corroboration.score,
-        corroborationNotes: formatNotes(attrs.corroboration),
-        coverageScore: attrs.coverage.score,
-        coverageNotes: formatNotes(attrs.coverage),
-        freshnessScore: attrs.freshness.score,
-        freshnessNotes: formatNotes(attrs.freshness),
-        indexabilityScore: attrs.indexability.score,
-        indexabilityNotes: formatNotes(attrs.indexability),
-        machineReadabilityScore: attrs.machineReadability.score,
-        machineReadabilityNotes: formatNotes(attrs.machineReadability),
-        priorityActions: result.priorityActions,
-      },
+    const scoreData = {
+      overallScore,
+      industryBenchmark: result.industryBenchmark ?? null,
+      scrapeQuality: result.scrapeQuality ?? null,
+      extractabilityScore: attrs.extractability.score,
+      extractabilityNotes: formatNotes(attrs.extractability),
+      entityClarityScore: attrs.entityClarity.score,
+      entityClarityNotes: formatNotes(attrs.entityClarity),
+      specificityScore: attrs.specificity.score,
+      specificityNotes: formatNotes(attrs.specificity),
+      corroborationScore: attrs.corroboration.score,
+      corroborationNotes: formatNotes(attrs.corroboration),
+      coverageScore: attrs.coverage.score,
+      coverageNotes: formatNotes(attrs.coverage),
+      freshnessScore: attrs.freshness.score,
+      freshnessNotes: formatNotes(attrs.freshness),
+      indexabilityScore: attrs.indexability.score,
+      indexabilityNotes: formatNotes(attrs.indexability),
+      machineReadabilityScore: attrs.machineReadability.score,
+      machineReadabilityNotes: formatNotes(attrs.machineReadability),
+      priorityActions: result.priorityActions,
+    };
+
+    // upsert so a retried job doesn't crash on the unique analysisId constraint
+    await prisma.geoScore.upsert({
+      where: { analysisId },
+      update: scoreData,
+      create: { analysisId, ...scoreData },
     });
   }
 }
@@ -154,9 +158,9 @@ Also estimate the industry benchmark score (0-100 overall) for ${industry} compa
 
 Return ONLY valid JSON:
 {
-  "overall_score": 0-100,
-  "industry_benchmark": 0-100,
-  "scrape_quality": "good|fair|poor",
+  "overallScore": 0-100,
+  "industryBenchmark": 0-100,
+  "scrapeQuality": "good|fair|poor",
   "attributes": {
     "extractability": { "score": 0-5, "justification": "...", "examples": ["..."], "improvements": ["..."] },
     "entityClarity": { "score": 0-5, "justification": "...", "examples": ["..."], "improvements": ["..."] },

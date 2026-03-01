@@ -122,15 +122,33 @@ export function startAnalysisWorker() {
           brandVoiceNotes: company.brandVoiceNotes,
         };
 
-        await Promise.allSettled([
-          contentGenerationService.generatePageRecommendations(
-            analysisId,
-            companyCtx,
-            geoNotes,
-            customerScrape?.htmlContent ?? '',
-          ),
-          contentGenerationService.generateBlogSuite(analysisId, companyCtx),
+        // Check for existing content to avoid duplicates on job retry
+        const [existingRecs, existingPosts] = await Promise.all([
+          prisma.pageRecommendation.count({ where: { analysisId } }),
+          prisma.blogPost.count({ where: { analysisId } }),
         ]);
+
+        const contentTasks = [
+          existingRecs === 0
+            ? contentGenerationService.generatePageRecommendations(
+                analysisId,
+                companyCtx,
+                geoNotes,
+                customerScrape?.htmlContent ?? '',
+              )
+            : Promise.resolve(),
+          existingPosts === 0
+            ? contentGenerationService.generateBlogSuite(analysisId, companyCtx)
+            : Promise.resolve(),
+        ];
+
+        const contentResults = await Promise.allSettled(contentTasks);
+        contentResults.forEach((r, i) => {
+          if (r.status === 'rejected') {
+            const task = i === 0 ? 'generatePageRecommendations' : 'generateBlogSuite';
+            console.error(`[Worker] ${task} failed for analysis ${analysisId}:`, r.reason);
+          }
+        });
 
         await job.updateProgress(100);
 

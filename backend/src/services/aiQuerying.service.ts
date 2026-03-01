@@ -101,21 +101,31 @@ export class AiQueryingService {
       await Promise.allSettled(
         batch.map(async (q) => {
           try {
-            const results = await this.queryAllEngines(q.query, companyName, competitorNames);
-
-            await prisma.aiQueryResult.createMany({
-              data: results.map((r) => ({
-                analysisId,
-                queryId: q.id,
-                engine: r.engine,
-                rawResponse: r.rawResponse,
-                companyMentioned: r.companyMentioned,
-                mentionCount: r.mentionCount,
-                mentionContext: r.mentionContext,
-                citations: r.citations,
-                shareOfVoice: r.shareOfVoice,
-              })),
+            // Skip queries already completed (guards against duplicate inserts on job retry)
+            const existing = await prisma.aiQueryResult.findMany({
+              where: { queryId: q.id },
+              select: { engine: true },
             });
+            const existingEngines = new Set(existing.map((r) => r.engine));
+
+            const results = await this.queryAllEngines(q.query, companyName, competitorNames);
+            const newResults = results.filter((r) => !existingEngines.has(r.engine));
+
+            if (newResults.length > 0) {
+              await prisma.aiQueryResult.createMany({
+                data: newResults.map((r) => ({
+                  analysisId,
+                  queryId: q.id,
+                  engine: r.engine,
+                  rawResponse: r.rawResponse,
+                  companyMentioned: r.companyMentioned,
+                  mentionCount: r.mentionCount,
+                  mentionContext: r.mentionContext,
+                  citations: r.citations,
+                  shareOfVoice: r.shareOfVoice,
+                })),
+              });
+            }
           } catch (err) {
             console.error(`[AiQuerying] Failed for query "${q.query}":`, err);
           }

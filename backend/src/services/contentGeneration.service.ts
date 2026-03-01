@@ -11,11 +11,6 @@ interface CompanyContext {
   brandVoiceNotes?: string | null;
 }
 
-interface BlogTopicSuggestion {
-  title: string;
-  targetQuery: string;
-  rationale: string;
-}
 
 export class ContentGenerationService {
   /**
@@ -147,7 +142,7 @@ export class ContentGenerationService {
     if (!post) throw new Error('Blog post not found');
 
     // Save previous version
-    await prisma.blogRevision.create({
+    const revision = await prisma.blogRevision.create({
       data: {
         blogPostId,
         feedback,
@@ -169,9 +164,9 @@ export class ContentGenerationService {
       systemPrompt: BLOG_SYSTEM_PROMPT,
     });
 
-    // Update revision record with new content
-    await prisma.blogRevision.updateMany({
-      where: { blogPostId, newContent: null },
+    // Update the specific revision record with new content
+    await prisma.blogRevision.update({
+      where: { id: revision.id },
       data: { newContent: result.content },
     });
 
