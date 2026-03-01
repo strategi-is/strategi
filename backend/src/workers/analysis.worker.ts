@@ -68,7 +68,7 @@ export function startAnalysisWorker() {
         // Only generate if none already exist (custom queries may have been added)
         const existingQueries = await prisma.targetQuery.count({ where: { analysisId } });
         if (existingQueries === 0) {
-          await queryGenerationService.generateQueries(analysisId, analysisId, {
+          await queryGenerationService.generateQueries(companyId, analysisId, {
             name: company.name,
             websiteUrl: company.websiteUrl,
             industry: company.industry,
