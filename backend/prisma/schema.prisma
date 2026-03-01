@@ -1,0 +1,356 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── AUTH ────────────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  companyName   String
+  emailVerified Boolean   @default(false)
+  verifyToken   String?
+  resetToken    String?
+  resetTokenExp DateTime?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Stripe billing
+  stripeCustomerId          String?
+  subscriptionStatus        SubscriptionStatus @default(FREE)
+  subscriptionPlan          String?
+  subscriptionCurrentPeriodEnd DateTime?
+
+  companies     Company[]
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  FREE
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
+// ─── COMPANY PROFILE ─────────────────────────────────────────────────────────
+
+model Company {
+  id                   String   @id @default(cuid())
+  userId               String
+  name                 String
+  websiteUrl           String
+  industry             String
+  targetAudience       String   @db.Text
+  productsServices     String   @db.Text
+  keyDifferentiators   String   @db.Text
+  brandVoiceNotes      String?  @db.Text
+  brandVoiceFileUrl    String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  competitors   Competitor[]
+  analyses      Analysis[]
+  queries       TargetQuery[]
+}
+
+model Competitor {
+  id         String   @id @default(cuid())
+  companyId  String
+  name       String?
+  websiteUrl String
+  createdAt  DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+// ─── ANALYSIS ────────────────────────────────────────────────────────────────
+
+model Analysis {
+  id          String         @id @default(cuid())
+  companyId   String
+  status      AnalysisStatus @default(PENDING)
+  triggeredBy TriggerType    @default(MANUAL)
+  startedAt   DateTime?
+  completedAt DateTime?
+  errorMsg    String?
+  createdAt   DateTime       @default(now())
+
+  company            Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  geoScore           GeoScore?
+  aiQueryResults     AiQueryResult[]
+  pageRecommendations PageRecommendation[]
+  blogPosts          BlogPost[]
+  scrapeJobs         ScrapeJob[]
+}
+
+enum AnalysisStatus {
+  PENDING
+  SCRAPING
+  QUERYING_AI
+  SCORING
+  GENERATING_CONTENT
+  COMPLETED
+  FAILED
+}
+
+enum TriggerType {
+  MANUAL
+  SCHEDULED
+}
+
+// ─── SCRAPING (OLOSTEP) ──────────────────────────────────────────────────────
+
+model ScrapeJob {
+  id             String      @id @default(cuid())
+  analysisId     String
+  url            String
+  type           ScrapeType
+  status         ScrapeStatus @default(PENDING)
+  attempts       Int          @default(0)
+  htmlContent    String?      @db.Text
+  htmlQuality    HtmlQuality?
+  qualityScore   Int?
+  qualityIssues  String[]
+  responseTimeMs Int?
+  creditsUsed    Float?
+  errorMsg       String?
+  scrapedAt      DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  analysis Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+}
+
+enum ScrapeType {
+  CUSTOMER_SITE
+  COMPETITOR_SITE
+}
+
+enum ScrapeStatus {
+  PENDING
+  IN_PROGRESS
+  SUCCESS
+  FAILED
+  SKIPPED
+}
+
+enum HtmlQuality {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
+
+// ─── TARGET QUERIES ──────────────────────────────────────────────────────────
+
+model TargetQuery {
+  id             String   @id @default(cuid())
+  companyId      String
+  analysisId     String?
+  query          String   @db.Text
+  buyerStage     BuyerStage
+  relevanceScore Float?
+  isCustom       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  company        Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  aiQueryResults AiQueryResult[]
+}
+
+enum BuyerStage {
+  AWARENESS
+  CONSIDERATION
+  DECISION
+}
+
+// ─── AI QUERY RESULTS ────────────────────────────────────────────────────────
+
+model AiQueryResult {
+  id               String    @id @default(cuid())
+  analysisId       String
+  queryId          String
+  engine           AiEngine
+  rawResponse      String    @db.Text
+  companyMentioned Boolean   @default(false)
+  mentionCount     Int       @default(0)
+  mentionContext   String?   @db.Text
+  citations        String[]
+  shareOfVoice     Float?
+  queriedAt        DateTime  @default(now())
+
+  analysis Analysis    @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  query    TargetQuery @relation(fields: [queryId], references: [id], onDelete: Cascade)
+}
+
+enum AiEngine {
+  CHATGPT
+  PERPLEXITY
+  GEMINI
+  AI_OVERVIEW
+}
+
+// ─── GEO SCORING ─────────────────────────────────────────────────────────────
+
+model GeoScore {
+  id                    String   @id @default(cuid())
+  analysisId            String   @unique
+  overallScore          Float
+  industryBenchmark     Float?
+  scrapeQuality         String?
+
+  // 8 GEO attributes (0-5 each)
+  extractabilityScore   Float
+  extractabilityNotes   String?  @db.Text
+
+  entityClarityScore    Float
+  entityClarityNotes    String?  @db.Text
+
+  specificityScore      Float
+  specificityNotes      String?  @db.Text
+
+  corroborationScore    Float
+  corroborationNotes    String?  @db.Text
+
+  coverageScore         Float
+  coverageNotes         String?  @db.Text
+
+  freshnessScore        Float
+  freshnessNotes        String?  @db.Text
+
+  indexabilityScore     Float
+  indexabilityNotes     String?  @db.Text
+
+  machineReadabilityScore Float
+  machineReadabilityNotes String? @db.Text
+
+  priorityActions       String[]
+  createdAt             DateTime @default(now())
+
+  analysis Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+}
+
+// ─── RECOMMENDATIONS ─────────────────────────────────────────────────────────
+
+model PageRecommendation {
+  id           String             @id @default(cuid())
+  analysisId   String
+  pageUrl      String
+  pageType     String
+  priority     Priority
+  title        String
+  description  String             @db.Text
+  improvements String[]
+  status       RecommendationStatus @default(PENDING)
+  createdAt    DateTime           @default(now())
+
+  analysis Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum RecommendationStatus {
+  PENDING
+  IN_PROGRESS
+  IMPLEMENTED
+  SKIPPED
+}
+
+// ─── BLOG POSTS ──────────────────────────────────────────────────────────────
+
+model BlogPost {
+  id               String     @id @default(cuid())
+  analysisId       String
+  title            String
+  slug             String
+  targetQuery      String     @db.Text
+  buyerStage       BuyerStage @default(AWARENESS)
+  content          String     @db.Text
+  wordCount        Int
+  geoComplianceScore Float?
+  status           BlogStatus @default(DRAFT)
+  revisionCount    Int        @default(0)
+  customerApproved Boolean    @default(false)
+  publishedUrl     String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  analysis  Analysis       @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  revisions BlogRevision[]
+}
+
+enum BlogStatus {
+  DRAFT
+  REVISION_REQUESTED
+  APPROVED
+  PUBLISHED
+}
+
+model BlogRevision {
+  id             String   @id @default(cuid())
+  blogPostId     String
+  feedback       String   @db.Text
+  previousContent String  @db.Text
+  newContent     String?  @db.Text
+  createdAt      DateTime @default(now())
+
+  blogPost BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+}
+
+// ─── CMS INTEGRATION ─────────────────────────────────────────────────────────
+
+model CmsConnection {
+  id           String      @id @default(cuid())
+  companyId    String      @unique
+  type         CmsType
+  siteUrl      String
+  encryptedKey String
+  isActive     Boolean     @default(true)
+  lastTestedAt DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+enum CmsType {
+  WORDPRESS
+}
+
+// ─── OLOSTEP API LOGS ────────────────────────────────────────────────────────
+
+model OlostepApiLog {
+  id             String   @id @default(cuid())
+  url            String
+  status         Int
+  responseTimeMs Int
+  creditsUsed    Float?
+  success        Boolean
+  errorMsg       String?
+  calledAt       DateTime @default(now())
+}
