@@ -59,14 +59,46 @@ export default function LandingPage() {
             </div>
           }
         >
-          <Image
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80"
-            alt="Strategi GEO Analytics Dashboard"
-            height={720}
-            width={1400}
-            className="mx-auto rounded-2xl object-cover h-full object-top"
-            draggable={false}
-          />
+          <div className="h-full w-full bg-zinc-900 rounded-2xl flex flex-col">
+            {/* Fake browser bar */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
+              <div className="h-3 w-3 rounded-full bg-red-500" />
+              <div className="h-3 w-3 rounded-full bg-yellow-500" />
+              <div className="h-3 w-3 rounded-full bg-green-500" />
+              <div className="ml-4 flex-1 bg-zinc-800 rounded-md h-6 max-w-sm" />
+            </div>
+            {/* Fake dashboard */}
+            <div className="flex flex-1 overflow-hidden">
+              {/* Sidebar */}
+              <div className="w-48 border-r border-zinc-800 p-4 space-y-2 hidden md:block">
+                {['Dashboard', 'Companies', 'Analyses', 'Content', 'Settings'].map((item) => (
+                  <div key={item} className={`h-8 rounded-md px-3 flex items-center text-xs font-medium ${item === 'Analyses' ? 'bg-indigo-600 text-white' : 'text-zinc-400'}`}>
+                    {item}
+                  </div>
+                ))}
+              </div>
+              {/* Main content */}
+              <div className="flex-1 p-6 space-y-4">
+                <div className="grid grid-cols-3 gap-3">
+                  {[['GEO Score', '72/100', 'text-green-400'], ['Queries Run', '24', 'text-blue-400'], ['Blog Posts', '3', 'text-indigo-400']].map(([label, val, color]) => (
+                    <div key={label} className="bg-zinc-800 rounded-xl p-4">
+                      <p className="text-zinc-500 text-xs">{label}</p>
+                      <p className={`text-2xl font-bold mt-1 ${color}`}>{val}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-zinc-800 rounded-xl p-4 space-y-3">
+                  <div className="h-4 w-32 bg-zinc-700 rounded" />
+                  {[80, 60, 90, 45, 70].map((w, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="h-3 w-24 bg-zinc-700 rounded" />
+                      <div className="h-3 bg-indigo-500 rounded" style={{ width: `${w}%` }} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </ContainerScroll>
       </div>
 
