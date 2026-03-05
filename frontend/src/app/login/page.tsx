@@ -9,6 +9,7 @@ import { authApi } from '@/lib/api';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuroraBackground } from '@/components/ui/aurora-background';
 import { Zap } from 'lucide-react';
 import { useState } from 'react';
 
@@ -45,7 +46,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <AuroraBackground className="min-h-screen px-4" showRadialGradient>
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
@@ -103,6 +104,6 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuroraBackground>
   );
 }

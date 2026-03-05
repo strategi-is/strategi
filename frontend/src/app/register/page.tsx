@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { authApi } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuroraBackground } from '@/components/ui/aurora-background';
 import { Zap } from 'lucide-react';
 import { useState } from 'react';
 
@@ -45,7 +46,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+    <AuroraBackground className="min-h-screen px-4 py-12" showRadialGradient>
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
@@ -111,6 +112,6 @@ export default function RegisterPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuroraBackground>
   );
 }
