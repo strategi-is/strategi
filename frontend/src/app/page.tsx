@@ -59,42 +59,123 @@ export default function LandingPage() {
             </div>
           }
         >
-          <div className="h-full w-full bg-zinc-900 rounded-2xl flex flex-col">
-            {/* Fake browser bar */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
-              <div className="h-3 w-3 rounded-full bg-red-500" />
-              <div className="h-3 w-3 rounded-full bg-yellow-500" />
-              <div className="h-3 w-3 rounded-full bg-green-500" />
-              <div className="ml-4 flex-1 bg-zinc-800 rounded-md h-6 max-w-sm" />
+          <div className="h-full w-full bg-zinc-900 rounded-2xl flex flex-col text-white overflow-hidden">
+            {/* Browser bar */}
+            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-800 shrink-0">
+              <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
+              <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+              <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
+              <div className="ml-3 flex-1 bg-zinc-800 rounded h-5 max-w-xs flex items-center px-2">
+                <span className="text-zinc-500 text-[10px]">app.strategi.is/analyses/acme-corp</span>
+              </div>
             </div>
-            {/* Fake dashboard */}
+
             <div className="flex flex-1 overflow-hidden">
               {/* Sidebar */}
-              <div className="w-48 border-r border-zinc-800 p-4 space-y-2 hidden md:block">
-                {['Dashboard', 'Companies', 'Analyses', 'Content', 'Settings'].map((item) => (
-                  <div key={item} className={`h-8 rounded-md px-3 flex items-center text-xs font-medium ${item === 'Analyses' ? 'bg-indigo-600 text-white' : 'text-zinc-400'}`}>
-                    {item}
+              <div className="w-40 border-r border-zinc-800 p-3 space-y-1 shrink-0 hidden md:flex md:flex-col">
+                <div className="text-zinc-500 text-[9px] uppercase tracking-widest px-2 pt-1 pb-2">Workspace</div>
+                {[
+                  { label: 'Dashboard', active: false },
+                  { label: 'Companies', active: false },
+                  { label: 'Analyses', active: true },
+                  { label: 'Content', active: false },
+                  { label: 'Settings', active: false },
+                ].map(({ label, active }) => (
+                  <div key={label} className={`h-7 rounded-md px-2 flex items-center text-[11px] font-medium ${active ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}>
+                    {label}
                   </div>
                 ))}
+                <div className="mt-auto pt-4 border-t border-zinc-800">
+                  <div className="flex items-center gap-2 px-1">
+                    <div className="h-6 w-6 rounded-full bg-indigo-500 flex items-center justify-center text-[9px] font-bold">A</div>
+                    <div>
+                      <div className="text-[10px] text-zinc-300 font-medium">Acme Corp</div>
+                      <div className="text-[9px] text-zinc-500">Pro plan</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              {/* Main content */}
-              <div className="flex-1 p-6 space-y-4">
-                <div className="grid grid-cols-3 gap-3">
-                  {[['GEO Score', '72/100', 'text-green-400'], ['Queries Run', '24', 'text-blue-400'], ['Blog Posts', '3', 'text-indigo-400']].map(([label, val, color]) => (
-                    <div key={label} className="bg-zinc-800 rounded-xl p-4">
-                      <p className="text-zinc-500 text-xs">{label}</p>
-                      <p className={`text-2xl font-bold mt-1 ${color}`}>{val}</p>
+
+              {/* Main */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-semibold text-white">GEO Analysis — Acme Corp</div>
+                    <div className="text-[10px] text-zinc-500 mt-0.5">Completed · 2 hours ago</div>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div className="bg-green-500/20 text-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full">COMPLETED</div>
+                  </div>
+                </div>
+
+                {/* Score cards */}
+                <div className="grid grid-cols-4 gap-2">
+                  {[
+                    { label: 'GEO Score', value: '72', sub: '/100', color: 'text-green-400' },
+                    { label: 'AI Queries', value: '24', sub: 'run', color: 'text-blue-400' },
+                    { label: 'Mentioned', value: '14', sub: 'times', color: 'text-indigo-400' },
+                    { label: 'Share of Voice', value: '38%', sub: 'avg', color: 'text-yellow-400' },
+                  ].map(({ label, value, sub, color }) => (
+                    <div key={label} className="bg-zinc-800 rounded-lg p-2.5">
+                      <div className="text-zinc-500 text-[9px] mb-1">{label}</div>
+                      <div className={`text-lg font-bold leading-none ${color}`}>{value}<span className="text-[10px] text-zinc-500 ml-0.5">{sub}</span></div>
                     </div>
                   ))}
                 </div>
-                <div className="bg-zinc-800 rounded-xl p-4 space-y-3">
-                  <div className="h-4 w-32 bg-zinc-700 rounded" />
-                  {[80, 60, 90, 45, 70].map((w, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="h-3 w-24 bg-zinc-700 rounded" />
-                      <div className="h-3 bg-indigo-500 rounded" style={{ width: `${w}%` }} />
+
+                {/* GEO attribute bars */}
+                <div className="bg-zinc-800 rounded-lg p-3 space-y-2">
+                  <div className="text-[11px] font-semibold text-zinc-300 mb-2">GEO Attributes</div>
+                  {[
+                    { label: 'Extractability', score: 4, max: 5, pct: 80 },
+                    { label: 'Entity Clarity', score: 3, max: 5, pct: 60 },
+                    { label: 'Specificity', score: 4.5, max: 5, pct: 90 },
+                    { label: 'Corroboration', score: 2, max: 5, pct: 40 },
+                    { label: 'Coverage', score: 3.5, max: 5, pct: 70 },
+                    { label: 'Freshness', score: 2.5, max: 5, pct: 50 },
+                  ].map(({ label, score, pct }) => (
+                    <div key={label} className="flex items-center gap-2">
+                      <div className="text-[9px] text-zinc-400 w-20 shrink-0">{label}</div>
+                      <div className="flex-1 bg-zinc-700 rounded-full h-1.5">
+                        <div className="bg-indigo-500 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
+                      </div>
+                      <div className="text-[9px] text-zinc-400 w-6 text-right">{score}</div>
                     </div>
                   ))}
+                </div>
+
+                {/* AI engine results */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-zinc-800 rounded-lg p-3">
+                    <div className="text-[10px] font-semibold text-zinc-300 mb-2">ChatGPT Results</div>
+                    {[
+                      { query: 'best B2B analytics tools', mentioned: true },
+                      { query: 'GEO optimization software', mentioned: false },
+                      { query: 'AI search visibility tools', mentioned: true },
+                    ].map(({ query, mentioned }) => (
+                      <div key={query} className="flex items-center gap-1.5 mb-1.5">
+                        <div className={`h-1.5 w-1.5 rounded-full shrink-0 ${mentioned ? 'bg-green-400' : 'bg-zinc-600'}`} />
+                        <div className="text-[9px] text-zinc-400 truncate">{query}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-zinc-800 rounded-lg p-3">
+                    <div className="text-[10px] font-semibold text-zinc-300 mb-2">Blog Posts Generated</div>
+                    {[
+                      { title: 'What is GEO?', stage: 'AWARENESS', score: 88 },
+                      { title: 'GEO vs SEO Guide', stage: 'CONSIDERATION', score: 82 },
+                      { title: 'How to rank in AI', stage: 'DECISION', score: 91 },
+                    ].map(({ title, stage, score }) => (
+                      <div key={title} className="mb-1.5">
+                        <div className="text-[9px] text-zinc-300 font-medium truncate">{title}</div>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <span className="text-[8px] text-indigo-400">{stage}</span>
+                          <span className="text-[8px] text-zinc-500">· GEO {score}/100</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
