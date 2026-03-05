@@ -7,18 +7,18 @@ interface CardProps {
 
 export function Card({ className, children }: CardProps) {
   return (
-    <div className={cn('rounded-xl border border-gray-200 bg-white shadow-sm', className)}>
+    <div className={cn('rounded-xl border border-white/40 bg-white/70 backdrop-blur-md shadow-sm dark:bg-white/5 dark:border-white/10', className)}>
       {children}
     </div>
   );
 }
 
 export function CardHeader({ className, children }: CardProps) {
-  return <div className={cn('px-6 py-4 border-b border-gray-100', className)}>{children}</div>;
+  return <div className={cn('px-6 py-4 border-b border-black/5 dark:border-white/10', className)}>{children}</div>;
 }
 
 export function CardTitle({ className, children }: CardProps) {
-  return <h3 className={cn('text-base font-semibold text-gray-900', className)}>{children}</h3>;
+  return <h3 className={cn('text-base font-semibold text-gray-900 dark:text-white', className)}>{children}</h3>;
 }
 
 export function CardContent({ className, children }: CardProps) {

@@ -51,14 +51,14 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
-            <Zap className="h-7 w-7 text-indigo-600" />
-            <span className="text-2xl font-bold text-gray-900">Strategi</span>
+            <Zap className="h-7 w-7 text-indigo-400" />
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">Strategi</span>
           </div>
-          <p className="text-sm text-gray-500">GEO Analytics Platform</p>
+          <p className="text-sm text-gray-500 dark:text-white/50">GEO Analytics Platform</p>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
-          <h1 className="mb-6 text-xl font-semibold text-gray-900">Sign in</h1>
+        <div className="rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl p-8 shadow-2xl dark:border-white/10 dark:bg-white/5">
+          <h1 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">Sign in</h1>
 
           {serverError && (
             <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
@@ -97,9 +97,9 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-4 text-center text-sm text-gray-500 dark:text-white/50">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-700">
+          <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
             Create one
           </Link>
         </p>
