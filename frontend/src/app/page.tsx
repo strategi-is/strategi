@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
+import { AuroraBackground } from '@/components/ui/aurora-background';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, BarChart3, FileText } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-black overflow-x-hidden">
+    <AuroraBackground className="min-h-screen overflow-x-hidden" showRadialGradient>
 
       {/* ── Nav ─────────────────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-900">
@@ -244,6 +245,6 @@ export default function LandingPage() {
       <footer className="border-t border-gray-100 dark:border-gray-900 py-8 px-6 text-center text-sm text-gray-400">
         © {new Date().getFullYear()} Strategi. All rights reserved.
       </footer>
-    </main>
+    </AuroraBackground>
   );
 }

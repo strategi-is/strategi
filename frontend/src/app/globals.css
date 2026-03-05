@@ -2,8 +2,32 @@
 
 :root {
   --font-geist: 'Geist', sans-serif;
+
+  /* Aurora color variables (component uses var(--blue-500) etc.) */
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --indigo-300: #a5b4fc;
+  --violet-200: #ddd6fe;
 }
 
 body {
   font-family: var(--font-geist), Arial, Helvetica, sans-serif;
+}
+
+/* Aurora animation */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+@theme {
+  --animate-aurora: aurora 60s linear infinite;
 }
