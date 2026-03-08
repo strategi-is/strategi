@@ -32,8 +32,10 @@ export class OlostepService {
       });
 
       const responseTimeMs = Date.now() - startTime;
-      const html: string = response.data?.html_content || response.data || '';
-      const creditsUsed: number = response.data?.credits_used ?? undefined;
+      // New Olostep API returns result nested under .result; fall back to markdown when html is null
+      const data = response.data?.result ?? response.data;
+      const html: string = data?.html_content || data?.markdown_content || '';
+      const creditsUsed: number = response.data?.credits_consumed ?? response.data?.credits_used ?? undefined;
 
       await this.logApiCall(url, 200, responseTimeMs, creditsUsed, true);
 
