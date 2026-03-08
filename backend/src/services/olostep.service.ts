@@ -101,6 +101,7 @@ export class OlostepService {
             });
           } catch (err) {
             const msg = err instanceof Error ? err.message : 'Unknown error';
+            console.error(`[Olostep] Scrape FAILED for ${url}: ${msg}`);
             await prisma.scrapeJob.update({
               where: { id: scrapeJobId },
               data: { status: 'FAILED', errorMsg: msg },
