@@ -18,6 +18,10 @@ import { billingController } from './controllers/billing.controller';
 
 const app = express();
 
+// ─── TRUST PROXY ─────────────────────────────────────────────────────────────
+// Required on Railway/Heroku/etc so rate limiters see real client IPs via X-Forwarded-For
+app.set('trust proxy', 1);
+
 // ─── SECURITY HEADERS ────────────────────────────────────────────────────────
 // helmet sets X-Content-Type-Options, X-Frame-Options, HSTS, CSP, etc.
 app.use(helmet());
@@ -72,7 +76,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/companies', companyRoutes);
 
 // Analysis start is expensive (triggers LLM + scraping pipeline): 5 / hour / IP
-app.use('/api/analyses/companies', analysisLimiter);
+// Scope to POST only — GET polling must not count against this limit
+app.post('/api/analyses/companies/:companyId/start', analysisLimiter);
 app.use('/api/analyses', analysisRoutes);
 
 app.use('/api/admin', adminRoutes);
