@@ -70,7 +70,7 @@ export class ContentGenerationService {
       wordCount: number;
       geoComplianceScore: number;
     }>(prompt, {
-      maxTokens: 5000,
+      maxTokens: 8192,
       temperature: 0.5,
       systemPrompt: BLOG_SYSTEM_PROMPT,
     });
@@ -159,7 +159,7 @@ export class ContentGenerationService {
       wordCount: number;
       geoComplianceScore: number;
     }>(prompt, {
-      maxTokens: 5000,
+      maxTokens: 8192,
       temperature: 0.5,
       systemPrompt: BLOG_SYSTEM_PROMPT,
     });
