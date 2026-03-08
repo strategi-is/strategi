@@ -27,10 +27,19 @@ app.set('trust proxy', 1);
 app.use(helmet());
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-// Only allow requests from the configured frontend origin
+// Allow requests from the configured frontend origin(s)
+const allowedOrigins = [
+  config.frontendUrl,
+  'https://strategigtm.com',
+  'https://www.strategigtm.com',
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: config.frontendUrl,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
