@@ -34,7 +34,7 @@ export class ContentGenerationService {
         improvements: string[];
       }>;
     }>(prompt, {
-      maxTokens: 3000,
+      maxTokens: 8192,
       temperature: 0.3,
       systemPrompt: RECOMMENDATIONS_SYSTEM_PROMPT,
     });
