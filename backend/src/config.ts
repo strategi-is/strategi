@@ -43,7 +43,7 @@ export const config = {
 
   olostep: {
     apiKey: apiKey('OLOSTEP_API_KEY'),
-    baseUrl: process.env.OLOSTEP_BASE_URL || 'https://agent.olostep.com/olostep-p2p-infer',
+    baseUrl: process.env.OLOSTEP_BASE_URL || 'https://api.olostep.com/v1/scrapes',
     costAlertThreshold: parseInt(process.env.OLOSTEP_COST_ALERT_THRESHOLD || '300', 10),
   },
 

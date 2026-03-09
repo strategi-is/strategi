@@ -19,20 +19,26 @@ export class OlostepService {
     const startTime = Date.now();
 
     try {
-      const response = await axios.get(this.baseUrl, {
-        params: {
-          token: this.apiKey,
-          url,
-          waitBeforeScraping: 1,
-          saveHtml: 'true',
-          removeCSSselectors: 'default',
-          htmlTransformer: 'none',
+      const response = await axios.post(
+        this.baseUrl,
+        {
+          url_to_scrape: url,
+          formats: ['markdown'],
+          wait_before_scraping: 1,
+          remove_css_selectors: 'default',
+          country: 'US',
         },
-        timeout: 30000,
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          timeout: 30000,
+        },
+      );
 
       const responseTimeMs = Date.now() - startTime;
-      // New Olostep API returns result nested under .result; fall back to markdown when html is null
+      // API returns result nested under .result; fall back to markdown when html is null
       const data = response.data?.result ?? response.data;
       const html: string = data?.html_content || data?.markdown_content || '';
       const creditsUsed: number = response.data?.credits_consumed ?? response.data?.credits_used ?? undefined;
