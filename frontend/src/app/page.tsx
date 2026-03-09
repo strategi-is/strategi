@@ -1,11 +1,12 @@
 'use client';
+import { LogoIcon } from '@/components/ui/logo';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Bell, BarChart3, FileText } from 'lucide-react';
+import { ArrowRight, BarChart3, FileText } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -34,7 +35,7 @@ export default function LandingPage() {
           titleComponent={
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full bg-orange-50 dark:bg-orange-950 px-4 py-1.5 text-sm font-medium text-orange-600 dark:text-orange-300 border border-orange-100 dark:border-orange-800">
-                <Bell className="h-3.5 w-3.5" />
+                <LogoIcon className="h-3.5 w-3.5" />
                 GEO Analytics for B2B companies
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
@@ -196,7 +197,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Bell className="h-6 w-6 text-orange-500" />,
+                icon: <LogoIcon className="h-6 w-6" />,
                 title: 'AI Query Analysis',
                 desc: 'We run your target queries through ChatGPT and Perplexity and measure exactly where your brand appears — and where it doesn\'t.',
               },

@@ -1,4 +1,5 @@
 'use client';
+import { LogoIcon } from '@/components/ui/logo';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,7 +11,7 @@ import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuroraBackground } from '@/components/ui/aurora-background';
-import { Bell } from 'lucide-react';
+
 import { useState } from 'react';
 
 const schema = z.object({
@@ -51,7 +52,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
-            <Bell className="h-7 w-7 text-orange-400" />
+            <LogoIcon className="h-7 w-7" />
             <span className="text-2xl font-bold text-gray-900 dark:text-white">Strategi</span>
           </div>
           <p className="text-sm text-gray-500 dark:text-white/50">GEO Analytics Platform</p>

@@ -10,9 +10,9 @@ import {
   LogOut,
   Settings,
   FileText,
-  Bell,
   ShieldCheck,
 } from 'lucide-react';
+import { LogoIcon } from '@/components/ui/logo';
 import { useAuthStore } from '@/store/auth';
 import { authApi } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -45,7 +45,7 @@ export function Sidebar() {
     <aside className="flex h-screen w-64 flex-col border-r border-white/40 bg-white/80 backdrop-blur-md dark:bg-zinc-900/80 dark:border-white/10">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2 border-b border-gray-200/50 dark:border-white/10 px-6">
-        <Bell className="h-6 w-6 text-orange-500" />
+        <LogoIcon className="h-6 w-6" />
         <span className="text-lg font-bold text-gray-900 dark:text-white">Strategi</span>
       </div>
 

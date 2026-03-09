@@ -1,4 +1,5 @@
 'use client';
+import { LogoIcon } from '@/components/ui/logo';
 
 import { useAuthStore } from '@/store/auth';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -7,7 +8,7 @@ import { Header } from '@/components/layout/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CreditCard, Bell } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 
 type SubscriptionStatus = 'FREE' | 'ACTIVE' | 'PAST_DUE' | 'CANCELED';
 
@@ -105,7 +106,7 @@ export default function SettingsPage() {
           {isPro || isPastDue ? (
             <>
               <div className="flex items-center gap-3 rounded-lg bg-orange-50 border border-orange-100 px-4 py-3">
-                <Bell className="h-5 w-5 text-orange-500 shrink-0" />
+                <LogoIcon className="h-5 w-5" />
                 <div>
                   <p className="text-sm font-medium text-orange-900">
                     {billing?.subscriptionPlan
@@ -143,7 +144,7 @@ export default function SettingsPage() {
                 onClick={() => checkoutMutation.mutate()}
                 loading={checkoutMutation.isPending}
               >
-                <Bell className="mr-1.5 h-4 w-4" />
+                <LogoIcon className="mr-1.5 h-4 w-4" />
                 Upgrade to Pro
               </Button>
             </>
