@@ -64,7 +64,7 @@ export function GeoScoreCard({ score }: GeoScoreCardProps) {
               <div key={key} className="flex items-center gap-3">
                 <span className="w-36 text-xs text-gray-600 shrink-0">{label}</span>
                 <div className="flex-1 rounded-full bg-gray-100 h-2">
-                  <div className="h-2 rounded-full bg-indigo-500 transition-all" style={{ width: `${(val / 5) * 100}%` }} />
+                  <div className="h-2 rounded-full bg-orange-500 transition-all" style={{ width: `${(val / 5) * 100}%` }} />
                 </div>
                 <span className="w-8 text-right text-xs font-medium text-gray-700">{val}/5</span>
               </div>
@@ -78,7 +78,7 @@ export function GeoScoreCard({ score }: GeoScoreCardProps) {
             <ul className="space-y-1.5">
               {score.priorityActions.map((action, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
                   {action}
                 </li>
               ))}

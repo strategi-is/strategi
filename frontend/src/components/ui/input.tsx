@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={cn(
-            'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:bg-gray-50 disabled:text-gray-500 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/40 dark:focus:border-indigo-400 dark:focus:ring-indigo-400',
+            'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:bg-gray-50 disabled:text-gray-500 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/40 dark:focus:border-orange-400 dark:focus:ring-orange-400',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             className,
           )}
@@ -46,7 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           className={cn(
-            'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:bg-gray-50 disabled:text-gray-500 resize-y dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/40 dark:focus:border-indigo-400 dark:focus:ring-indigo-400',
+            'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:bg-gray-50 disabled:text-gray-500 resize-y dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/40 dark:focus:border-orange-400 dark:focus:ring-orange-400',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             className,
           )}

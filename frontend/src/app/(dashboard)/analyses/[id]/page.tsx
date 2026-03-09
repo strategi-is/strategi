@@ -224,7 +224,7 @@ export default function AnalysisDetailPage() {
                           {revisePostId === post.id ? (
                             <div className="space-y-3">
                               <textarea
-                                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
                                 rows={3}
                                 placeholder="Instructions for revision (e.g. 'Make it more concise', 'Add more examples')"
                                 value={reviseInstructions}

@@ -45,7 +45,7 @@ export default function AnalysesPage() {
         <div className="space-y-3">
           {analyses.map((a) => (
             <Link key={a.id} href={`/analyses/${a.id}`}>
-              <Card className="hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer">
+              <Card className="hover:border-orange-300 hover:shadow-md transition-all cursor-pointer">
                 <CardContent className="flex items-center justify-between py-4">
                   <div className="flex items-center gap-4">
                     <Badge variant={statusBadge(a.status)}>{statusLabel(a.status)}</Badge>

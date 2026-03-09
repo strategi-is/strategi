@@ -50,8 +50,8 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <CardContent className="flex items-center gap-4 py-5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100">
-              <Building2 className="h-5 w-5 text-indigo-600" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100">
+              <Building2 className="h-5 w-5 text-orange-500" />
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{companies.length}</p>
@@ -98,7 +98,7 @@ export default function DashboardPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Recent Analyses</CardTitle>
-            <Link href="/analyses" className="text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
+            <Link href="/analyses" className="text-sm text-orange-500 hover:text-orange-600 flex items-center gap-1">
               View all <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
@@ -148,7 +148,7 @@ export default function DashboardPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Company Profiles</CardTitle>
-            <Link href="/companies" className="text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
+            <Link href="/companies" className="text-sm text-orange-500 hover:text-orange-600 flex items-center gap-1">
               View all <ArrowRight className="h-3 w-3" />
             </Link>
           </div>

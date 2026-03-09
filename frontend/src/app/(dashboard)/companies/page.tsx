@@ -50,11 +50,11 @@ export default function CompaniesPage() {
         <div className="grid gap-4">
           {companies.map((c) => (
             <Link key={c.id} href={`/companies/${c.id}`}>
-              <Card className="hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer">
+              <Card className="hover:border-orange-300 hover:shadow-md transition-all cursor-pointer">
                 <CardContent className="flex items-center justify-between py-5">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-100">
-                      <Building2 className="h-5 w-5 text-indigo-600" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-100">
+                      <Building2 className="h-5 w-5 text-orange-500" />
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">{c.name}</p>

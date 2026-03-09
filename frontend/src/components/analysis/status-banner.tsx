@@ -43,8 +43,8 @@ export function StatusBanner({ status, errorMsg }: StatusBannerProps) {
   const currentStep = STEP_ORDER.indexOf(status);
 
   return (
-    <div className="rounded-lg bg-indigo-50 border border-indigo-200 px-4 py-3">
-      <div className="flex items-center gap-2 text-sm font-medium text-indigo-800">
+    <div className="rounded-lg bg-orange-50 border border-orange-200 px-4 py-3">
+      <div className="flex items-center gap-2 text-sm font-medium text-orange-800">
         <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
         {statusLabel(status)}
       </div>
@@ -58,7 +58,7 @@ export function StatusBanner({ status, errorMsg }: StatusBannerProps) {
             <div key={s} className="flex flex-1 items-center gap-1">
               <div
                 className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  done ? 'bg-indigo-500' : active ? 'bg-indigo-300' : 'bg-indigo-100'
+                  done ? 'bg-orange-500' : active ? 'bg-orange-300' : 'bg-orange-100'
                 }`}
               />
             </div>
@@ -66,7 +66,7 @@ export function StatusBanner({ status, errorMsg }: StatusBannerProps) {
         })}
       </div>
 
-      <div className="mt-2 flex items-center gap-1.5 text-xs text-indigo-600">
+      <div className="mt-2 flex items-center gap-1.5 text-xs text-orange-500">
         <Clock className="h-3 w-3" />
         Full analysis typically completes in 3-4 hours
       </div>

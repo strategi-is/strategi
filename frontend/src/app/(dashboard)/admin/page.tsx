@@ -44,7 +44,7 @@ export default function AdminPage() {
         action={
           <Link
             href="/admin/olostep"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-600 transition-colors"
           >
             <Activity className="h-4 w-4" />
             Olostep logs
@@ -68,8 +68,8 @@ export default function AdminPage() {
           <StatCard
             label="Total users"
             value={stats?.users ?? 0}
-            icon={<Users className="h-5 w-5 text-indigo-600" />}
-            bg="bg-indigo-100"
+            icon={<Users className="h-5 w-5 text-orange-500" />}
+            bg="bg-orange-100"
           />
           <StatCard
             label="Companies"
@@ -127,7 +127,7 @@ export default function AdminPage() {
               <CardTitle>Olostep API</CardTitle>
               <Link
                 href="/admin/olostep"
-                className="text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
+                className="text-sm text-orange-500 hover:text-orange-600 flex items-center gap-1"
               >
                 View logs <ArrowRight className="h-3 w-3" />
               </Link>
@@ -139,7 +139,7 @@ export default function AdminPage() {
             </p>
             <Link
               href="/admin/olostep"
-              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-orange-500 hover:text-orange-600"
             >
               Open Olostep dashboard <ArrowRight className="h-3 w-3" />
             </Link>

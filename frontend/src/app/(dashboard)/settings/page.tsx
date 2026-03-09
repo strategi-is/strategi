@@ -7,7 +7,7 @@ import { Header } from '@/components/layout/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CreditCard, Zap } from 'lucide-react';
+import { CreditCard, Bell } from 'lucide-react';
 
 type SubscriptionStatus = 'FREE' | 'ACTIVE' | 'PAST_DUE' | 'CANCELED';
 
@@ -104,16 +104,16 @@ export default function SettingsPage() {
         <CardContent className="space-y-4">
           {isPro || isPastDue ? (
             <>
-              <div className="flex items-center gap-3 rounded-lg bg-indigo-50 border border-indigo-100 px-4 py-3">
-                <Zap className="h-5 w-5 text-indigo-600 shrink-0" />
+              <div className="flex items-center gap-3 rounded-lg bg-orange-50 border border-orange-100 px-4 py-3">
+                <Bell className="h-5 w-5 text-orange-500 shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-indigo-900">
+                  <p className="text-sm font-medium text-orange-900">
                     {billing?.subscriptionPlan
                       ? `${billing.subscriptionPlan.charAt(0).toUpperCase()}${billing.subscriptionPlan.slice(1)} plan`
                       : 'Pro plan'}
                   </p>
                   {billing?.subscriptionCurrentPeriodEnd && (
-                    <p className="text-xs text-indigo-600">
+                    <p className="text-xs text-orange-500">
                       Renews {new Date(billing.subscriptionCurrentPeriodEnd).toLocaleDateString()}
                     </p>
                   )}
@@ -143,7 +143,7 @@ export default function SettingsPage() {
                 onClick={() => checkoutMutation.mutate()}
                 loading={checkoutMutation.isPending}
               >
-                <Zap className="mr-1.5 h-4 w-4" />
+                <Bell className="mr-1.5 h-4 w-4" />
                 Upgrade to Pro
               </Button>
             </>

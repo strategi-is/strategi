@@ -9,7 +9,7 @@ import { authApi } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuroraBackground } from '@/components/ui/aurora-background';
-import { Zap } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { useState } from 'react';
 
 const schema = z.object({
@@ -50,7 +50,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
-            <Zap className="h-7 w-7 text-indigo-400" />
+            <Bell className="h-7 w-7 text-orange-400" />
             <span className="text-2xl font-bold text-gray-900 dark:text-white">Strategi</span>
           </div>
           <p className="text-sm text-gray-500 dark:text-white/50">GEO Analytics Platform</p>
@@ -107,7 +107,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-sm text-gray-500 dark:text-white/50">
           Already have an account?{' '}
-          <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+          <Link href="/login" className="font-medium text-orange-500 hover:text-orange-500 dark:text-orange-400 dark:hover:text-orange-300">
             Sign in
           </Link>
         </p>

@@ -50,7 +50,7 @@ export default function ContentPage() {
         <div className="space-y-3">
           {allPosts.map((post) => (
             <Link key={post.id} href={`/analyses/${post.analysisId}`}>
-              <Card className="hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer">
+              <Card className="hover:border-orange-300 hover:shadow-md transition-all cursor-pointer">
                 <CardContent className="flex items-start justify-between py-4 gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">

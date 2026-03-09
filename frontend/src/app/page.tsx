@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Zap, BarChart3, FileText } from 'lucide-react';
+import { ArrowRight, Bell, BarChart3, FileText } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -33,13 +33,13 @@ export default function LandingPage() {
         <ContainerScroll
           titleComponent={
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 dark:bg-indigo-950 px-4 py-1.5 text-sm font-medium text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800">
-                <Zap className="h-3.5 w-3.5" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-orange-50 dark:bg-orange-950 px-4 py-1.5 text-sm font-medium text-orange-600 dark:text-orange-300 border border-orange-100 dark:border-orange-800">
+                <Bell className="h-3.5 w-3.5" />
                 GEO Analytics for B2B companies
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
                 Get cited by{' '}
-                <span className="text-indigo-600">AI search</span>
+                <span className="text-orange-500">AI search</span>
                 <br />before your competitors do
               </h1>
               <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
@@ -82,13 +82,13 @@ export default function LandingPage() {
                   { label: 'Content', active: false },
                   { label: 'Settings', active: false },
                 ].map(({ label, active }) => (
-                  <div key={label} className={`h-7 rounded-md px-2 flex items-center text-[11px] font-medium ${active ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}>
+                  <div key={label} className={`h-7 rounded-md px-2 flex items-center text-[11px] font-medium ${active ? 'bg-orange-500 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}>
                     {label}
                   </div>
                 ))}
                 <div className="mt-auto pt-4 border-t border-zinc-800">
                   <div className="flex items-center gap-2 px-1">
-                    <div className="h-6 w-6 rounded-full bg-indigo-500 flex items-center justify-center text-[9px] font-bold">A</div>
+                    <div className="h-6 w-6 rounded-full bg-orange-500 flex items-center justify-center text-[9px] font-bold">A</div>
                     <div>
                       <div className="text-[10px] text-zinc-300 font-medium">Acme Corp</div>
                       <div className="text-[9px] text-zinc-500">Pro plan</div>
@@ -115,7 +115,7 @@ export default function LandingPage() {
                   {[
                     { label: 'GEO Score', value: '72', sub: '/100', color: 'text-green-400' },
                     { label: 'AI Queries', value: '24', sub: 'run', color: 'text-blue-400' },
-                    { label: 'Mentioned', value: '14', sub: 'times', color: 'text-indigo-400' },
+                    { label: 'Mentioned', value: '14', sub: 'times', color: 'text-orange-400' },
                     { label: 'Share of Voice', value: '38%', sub: 'avg', color: 'text-yellow-400' },
                   ].map(({ label, value, sub, color }) => (
                     <div key={label} className="bg-zinc-800 rounded-lg p-2.5">
@@ -139,7 +139,7 @@ export default function LandingPage() {
                     <div key={label} className="flex items-center gap-2">
                       <div className="text-[9px] text-zinc-400 w-20 shrink-0">{label}</div>
                       <div className="flex-1 bg-zinc-700 rounded-full h-1.5">
-                        <div className="bg-indigo-500 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
+                        <div className="bg-orange-500 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
                       </div>
                       <div className="text-[9px] text-zinc-400 w-6 text-right">{score}</div>
                     </div>
@@ -171,7 +171,7 @@ export default function LandingPage() {
                       <div key={title} className="mb-1.5">
                         <div className="text-[9px] text-zinc-300 font-medium truncate">{title}</div>
                         <div className="flex items-center gap-1 mt-0.5">
-                          <span className="text-[8px] text-indigo-400">{stage}</span>
+                          <span className="text-[8px] text-orange-400">{stage}</span>
                           <span className="text-[8px] text-zinc-500">· GEO {score}/100</span>
                         </div>
                       </div>
@@ -196,23 +196,23 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Zap className="h-6 w-6 text-indigo-600" />,
+                icon: <Bell className="h-6 w-6 text-orange-500" />,
                 title: 'AI Query Analysis',
                 desc: 'We run your target queries through ChatGPT and Perplexity and measure exactly where your brand appears — and where it doesn\'t.',
               },
               {
-                icon: <BarChart3 className="h-6 w-6 text-indigo-600" />,
+                icon: <BarChart3 className="h-6 w-6 text-orange-500" />,
                 title: 'GEO Score & Benchmarks',
                 desc: 'Get scored across 8 GEO attributes — extractability, entity clarity, specificity, and more — benchmarked against your industry.',
               },
               {
-                icon: <FileText className="h-6 w-6 text-indigo-600" />,
+                icon: <FileText className="h-6 w-6 text-orange-500" />,
                 title: 'Content That Gets Cited',
                 desc: 'Auto-generated blog posts and page recommendations built specifically to be cited by AI systems at every buyer stage.',
               },
             ].map((f) => (
               <div key={f.title} className="bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-gray-100 dark:border-zinc-800 shadow-sm">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-950 mb-5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 dark:bg-orange-950 mb-5">
                   {f.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{f.title}</h3>
